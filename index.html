@@ -2,12 +2,34 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title></title>
+        <title>Fake Medicine Detector</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="./styles/index.css"/>
     </head>
     <body>
-        
+        <div id="connection-status" style="padding: 10px; margin: 10px; border-radius: 5px;">
+            Checking backend connection...
+        </div>
+
+        <div class="container">
+            <h1>Fake Medicine Detector</h1>
+            
+            <div class="upload-section">
+                <form id="uploadForm">
+                    <div class="file-input-container">
+                        <input type="file" id="medicineImage" name="medicineImage" accept="image/*" required>
+                        <label for="medicineImage">Choose Medicine Image</label>
+                    </div>
+                    <button type="submit">Upload and Analyze</button>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <h2>Uploaded Images</h2>
+                <div id="imageList"></div>
+            </div>
+        </div>
+
         <script src="./scripts/index.js"></script>
     </body>
 </html>
