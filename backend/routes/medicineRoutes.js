@@ -11,7 +11,7 @@ router.get('/test', (req, res) => {
 });
 
 // Handle image upload and verification
-router.post('/upload', upload.single('medicineImage'), async (req, res) => {
+router.post('/upload', upload, async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });

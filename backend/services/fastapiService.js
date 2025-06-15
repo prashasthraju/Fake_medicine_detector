@@ -5,16 +5,22 @@ const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 
 async function verifyMedicineWithFastAPI(imageBuffer) {
     try {
-        // Mock response for now
+        // Convert buffer to form data
+        const formData = new FormData();
+        formData.append('file', new Blob([imageBuffer]), 'medicine.jpg');
+
+        // Call the ML model API
+        const response = await axios.post(`${FASTAPI_URL}/predict`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        // Transform the response to match our expected format
         return {
-            isAuthentic: Math.random() > 0.5,
-            confidence: Math.random() * 100,
-            details: {
-                colorMatch: Math.random() > 0.3,
-                textureMatch: Math.random() > 0.3,
-                shapeMatch: Math.random() > 0.3,
-                printQuality: Math.random() > 0.3
-            }
+            isAuthentic: !response.data.is_fake,
+            confidence: response.data.confidence * 100,
+            details: response.data.model_details
         };
     } catch (error) {
         console.error('Error calling FastAPI:', error);

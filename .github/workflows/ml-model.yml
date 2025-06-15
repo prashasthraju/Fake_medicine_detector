@@ -1,0 +1,49 @@
+name: ML Model CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'ml_model/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'ml_model/**'
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+        cache-dependency-path: ml_model/requirements.txt
+
+    - name: Install dependencies
+      working-directory: ./ml_model
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      working-directory: ./ml_model
+      run: |
+        python -m pytest tests/
+
+    - name: Build model artifacts
+      working-directory: ./ml_model
+      run: |
+        python train.py
+
+    - name: Upload model artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ml-model-artifacts
+        path: |
+          ml_model/models/
+          ml_model/weights/ 
