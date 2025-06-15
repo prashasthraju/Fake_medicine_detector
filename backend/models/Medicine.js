@@ -12,11 +12,18 @@ const medicineSchema = new mongoose.Schema({
     },
     analysisResult: {
         type: String,
+        enum: ['authentic', 'counterfeit', 'pending'],
         default: 'pending'
     },
     confidence: {
         type: Number,
         default: 0
+    },
+    verificationDetails: {
+        colorMatch: Boolean,
+        textureMatch: Boolean,
+        shapeMatch: Boolean,
+        printQuality: Boolean
     }
 });
 
