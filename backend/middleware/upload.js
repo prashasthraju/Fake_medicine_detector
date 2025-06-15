@@ -9,6 +9,6 @@ const upload = multer({
         }
         cb(null, true);
     }
-});
+}).single('medicineImage');
 
 module.exports = upload; 

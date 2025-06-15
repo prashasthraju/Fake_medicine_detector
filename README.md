@@ -61,18 +61,66 @@ node backend/app.js
 
 ```
 Fake_medicine_detector/
-├── backend/
-│   ├── models/
-│   │   └── Medicine.js
-│   └── app.js
-├── scripts/
-│   └── index.js
-├── styles/
-│   └── index.css
-├── index.html
-├── package.json
-└── README.md
+├── src/                    # Frontend source code
+│   ├── components/         # React components
+│   ├── pages/             # Page components
+│   ├── context/           # React context
+│   ├── utils/             # Utility functions
+│   ├── styles.css         # Global styles
+│   ├── App.tsx           # Main App component
+│   └── main.tsx          # Entry point
+├── backend/               # Backend server (Express.js)
+│   ├── routes/           # API routes
+│   ├── middleware/       # Express middleware
+│   ├── models/           # Database models
+│   ├── services/         # Business logic
+│   └── config/           # Configuration files
+├── ml_model/             # Machine Learning models
+│   ├── MODELS/           # Trained models
+│   └── real_medicines/   # Training data
+├── .venv/                # Python virtual environment
+├── node_modules/         # Node.js dependencies
+├── public/              # Static files
+└── package.json         # Node.js project configuration
 ```
+
+## Setup Instructions
+
+1. **Frontend Setup**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+2. **Backend Setup**
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+
+3. **ML Model Setup**
+   ```bash
+   cd ml_model
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+MONGODB_URI=your_mongodb_uri
+PORT=3000
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
 ## API Endpoints
 

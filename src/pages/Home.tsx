@@ -111,10 +111,10 @@ const Home = () => {
     setUploadProgress(prev => ({ ...prev, [imageId]: 0 }))
 
     const formData = new FormData()
-    formData.append('image', image.file)
+    formData.append('medicineImage', image.file)
 
     try {
-      const response = await axios.post('http://localhost:3000/api/verify', formData, {
+      const response = await axios.post('http://localhost:3000/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

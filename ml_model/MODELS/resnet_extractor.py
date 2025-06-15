@@ -5,7 +5,8 @@ from PIL import Image
 import os
 import numpy as np
 
-resnet = models.resnet18(pretrained=True)
+# Initialize ResNet with the new weights parameter
+resnet = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
 resnet.fc = torch.nn.Identity()
 resnet.eval()
 
