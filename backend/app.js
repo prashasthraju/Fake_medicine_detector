@@ -1,17 +1,18 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const { connectWithRetry } = require('./config/database');
+const dotenv = require('dotenv');
 const medicineRoutes = require('./routes/medicineRoutes');
+const authRoutes = require('./routes/auth');
 const path = require('path');
-require('dotenv').config();
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Enable CORS for all routes
+// Middleware
 app.use(cors());
-
-// Parse JSON bodies
 app.use(express.json());
 
 // Serve static files from the root directory, but only for non-API routes
@@ -23,11 +24,28 @@ app.use((req, res, next) => {
     }
 });
 
-// Use medicine routes
+// Routes
 app.use('/api', medicineRoutes);
+app.use('/api/auth', authRoutes);
 
-// Initial database connection
-connectWithRetry();
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/medicheck', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('MongoDB connected successfully');
+  console.log('Successfully connected to MongoDB.');
+})
+.catch((error) => {
+  console.error('MongoDB connection error:', error);
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
 
 // Start the server
 app.listen(port, () => {
